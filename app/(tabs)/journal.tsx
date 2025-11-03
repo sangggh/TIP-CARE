@@ -1,4 +1,5 @@
 import SearchBar from "@/components/SearchBar";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -9,6 +10,8 @@ type Entry = {
 };
 
 const Journal = () => {
+    const router = useRouter();
+    
     const [modalVisible, setModalVisible] = useState(false);
     const [entries, setEntries] = useState<Entry[]>([]);
     const [entryText, setEntryText] = useState("");
@@ -95,7 +98,10 @@ const Journal = () => {
                         <Text className="text-sm text-gray-600 mt-1">Your private space for reflection</Text>
                     </View>
                 </View>
-                <TouchableOpacity className="w-10 h-10 rounded-full bg-white justify-center items-center shadow mt-4">
+                
+                <TouchableOpacity
+                    onPress={() => router.push("/(profile)/profile")}
+                    className="w-10 h-10 rounded-full bg-white justify-center items-center shadow mt-4">
                     <Image
                         source={require("@/assets/icons/profile.png")}
                         className="w-9 h-9"
@@ -103,6 +109,7 @@ const Journal = () => {
                         tintColor="#0077CC"
                     />
                 </TouchableOpacity>
+
             </View>
             <View className="p-5">
                 <SearchBar
@@ -128,7 +135,13 @@ const Journal = () => {
                     {filteredEntries.map((entry, index) => (
                         <TouchableOpacity
                             key={index}
-                            onPress={() => openEditEntry(index)}
+                            onPress={() => {
+                                const originalIndex = entries.findIndex(
+                                    (e) => e.title === entry.title && e.content === entry.content && e.date === entry.date
+                                );
+                                openEditEntry(originalIndex);
+                            }}
+
                             className="bg-white rounded-2xl p-4 mt-5"
                         >
                             <View className="flex-row items-center justify-between">

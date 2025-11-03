@@ -1,7 +1,10 @@
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import SearchBar from "@/components/SearchBar";
+import { useRouter } from "expo-router";
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 const Clinics = () => {
+    const router = useRouter();
+
     return (
         <View className="flex-1 bg-blue-100">
             <View
@@ -28,7 +31,9 @@ const Clinics = () => {
                 </View>
 
 
-                <TouchableOpacity className="w-10 h-10 rounded-full bg-white justify-center items-center shadow mt-4">
+                <TouchableOpacity
+                    onPress={() => router.push("/(profile)/profile")}
+                    className="w-10 h-10 rounded-full bg-white justify-center items-center shadow mt-4">
                     <Image
                         source={require("@/assets/icons/profile.png")}
                         className="w-9 h-9"

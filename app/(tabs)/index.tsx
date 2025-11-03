@@ -1,7 +1,6 @@
-import {View, Text, Image, TouchableOpacity, ScrollView, Modal} from "react-native";
-import {useRouter} from "expo-router";
-import {logout} from ".././utils/authStorage";
-import {useState} from "react";
+import { useRouter } from "expo-router";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { logout } from ".././utils/authStorage";
 
 const Index = () => {
     const router = useRouter();
@@ -19,9 +18,6 @@ const Index = () => {
         await logout();
         router.replace("/(auth)/login");
     };
-
-    const [modalVisible, setModalVisible] = useState(false);
-
 
     return (
         <View className="flex-1 bg-blue-100">
@@ -48,11 +44,8 @@ const Index = () => {
                     </View>
                 </View>
 
-
                 <TouchableOpacity
-                    onPress={() => {
-                        setModalVisible(true)
-                    }}
+                    onPress={() => router.push("/(profile)/profile")}
                     className="w-10 h-10 rounded-full bg-white justify-center items-center shadow mt-4">
                     <Image
                         source={require("@/assets/icons/profile.png")}
@@ -61,6 +54,8 @@ const Index = () => {
                         tintColor="#0077CC"
                     />
                 </TouchableOpacity>
+
+
             </View>
             <ScrollView className="space-y-3 px-5">
 
@@ -208,45 +203,6 @@ const Index = () => {
                     </View>
                 </View>
             </ScrollView>
-
-            <Modal animationType="slide"
-                   transparent={true}
-                   visible={modalVisible}
-                   onRequestClose={() => {
-                       setModalVisible(!modalVisible);
-                   }}
-            >
-                <View className="flex-1 bg-blue-100">
-                    <View className="bg-[#0077CC] pt-12 flex-row">
-                        <View className="p-4">
-                            <TouchableOpacity
-                                className="w-10 h-10 rounded-full bg-white justify-center items-center shadow"
-                                onPress={() => setModalVisible(false)}>
-                                <Image
-                                    source={require("@/assets/icons/close.png")}
-                                    className="w-9 h-9 p-2"
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View className="justify-center w-full">
-                            <Text className="text-white text-xl font-extrabold">PROFILE</Text>
-                        </View>
-                    </View>
-
-                    <View className="flex-row justify-center">
-                        <View className="p-4">
-                            <TouchableOpacity
-                                onPress={handleLogout}
-                                className="bg-red-500 rounded-full p-4 flex-row items-center"
-                            >
-                                <Text className="text-white font-extrabold">LOGOUT</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
-
         </View>
     );
 }

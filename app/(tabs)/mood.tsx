@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from "react";
-import {View, Text, TouchableOpacity, Alert, Modal, Dimensions, ScrollView, Image, Button} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {BarChart} from "react-native-chart-kit";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, Dimensions, Image, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { BarChart } from "react-native-chart-kit";
 
 const Mood = () => {
+    const router = useRouter();
+    
     const [selectedMood, setSelectedMood] = useState<string | null>(null);
     const [todayMood, setTodayMood] = useState<string | null>(null);
     const [moodHistory, setMoodHistory] = useState<{ [key: string]: string }>({});
@@ -155,7 +158,7 @@ const Mood = () => {
 
 
                 <TouchableOpacity
-                    onPress={()=>{AsyncStorage.clear()}}
+                    onPress={() => router.push("/(profile)/profile")}
                     className="w-10 h-10 rounded-full bg-white justify-center items-center shadow mt-4">
                     <Image
                         source={require("@/assets/icons/profile.png")}
@@ -164,6 +167,7 @@ const Mood = () => {
                         tintColor="#0077CC"
                     />
                 </TouchableOpacity>
+                
             </View>
 
             <ScrollView
